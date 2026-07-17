@@ -14,6 +14,21 @@ A practical, tested collection of **traditional, statistical and machine-learnin
 
 The original notebooks remain as historical learning material. New maintained code lives in `src/timeseries_reference` and targets Python 3.10+.
 
+## Benchmark leaderboard
+
+The complete reproducible leaderboard is available in [`docs/BENCHMARK_LEADERBOARD.md`](docs/BENCHMARK_LEADERBOARD.md).
+
+| Overall rank | Model | Average dataset rank | Dataset wins |
+|---:|---|---:|---:|
+| 1 | Autoregression | 2.3333 | 1 |
+| 2 | Ridge lag regression | 2.6667 | 1 |
+| 3 | Exponential smoothing | 3.0000 | 0 |
+| 4 | Seasonal naive | 3.3333 | 0 |
+| 5 | Naive | 4.3333 | 1 |
+| 6 | Drift | 5.3333 | 0 |
+
+Overall ranking is based on average RMSE rank within each dataset, not raw RMSE across differently scaled series. This prevents large-valued datasets from dominating the leaderboard. The simple naive model winning the real-GDP dataset is intentionally retained: the benchmark reports evidence rather than assuming complex models must win.
+
 ## Open datasets
 
 The benchmark uses datasets distributed through `statsmodels`, so no private data, credentials or manual downloads are required.
@@ -30,11 +45,12 @@ These datasets exercise different forecasting problems rather than repeatedly te
 
 ```text
 .
-├── src/timeseries_reference/   # reusable forecasting package
-├── tests/                      # deterministic unit and integration tests
-├── .github/workflows/ci.yml    # lint, tests and benchmark execution
-├── *.ipynb                     # original worked examples
-└── pyproject.toml              # packaging, dependencies and CLI entry point
+├── docs/BENCHMARK_LEADERBOARD.md # published model rankings
+├── src/timeseries_reference/     # reusable forecasting package
+├── tests/                        # deterministic unit and integration tests
+├── .github/workflows/ci.yml      # lint, tests and benchmark execution
+├── *.ipynb                       # original worked examples
+└── pyproject.toml                # packaging, dependencies and CLI entry point
 ```
 
 ## Quick start
@@ -47,22 +63,25 @@ source .venv/bin/activate       # Windows: .venv\Scripts\activate
 pip install -e '.[classical,dev]'
 ruff check src tests
 pytest
-time-series-benchmark --output benchmark_results.csv
+time-series-benchmark \
+  --output benchmark_results.csv \
+  --leaderboard docs/BENCHMARK_LEADERBOARD.md
 ```
 
 Run one dataset only:
 
 ```bash
-time-series-benchmark --dataset co2 --output co2_results.csv
+time-series-benchmark --dataset co2 --output co2_results.csv --leaderboard co2_leaderboard.md
 ```
 
-The output is a sorted CSV with dataset, frequency, model, train/test size, MAE, RMSE and sMAPE. CI runs the full benchmark on Python 3.10, 3.11 and 3.12 and uploads the result files as workflow artifacts.
+The command writes both raw CSV results and a ranked Markdown leaderboard. CI runs the full benchmark on Python 3.10, 3.11 and 3.12 and uploads both files as workflow artifacts.
 
 ## Python example
 
 ```python
 from timeseries_reference.benchmark import benchmark_dataset
 from timeseries_reference.datasets import load_dataset
+from timeseries_reference.leaderboard import render_leaderboard
 from timeseries_reference.ml import LagRegressionForecaster
 
 sunspots = load_dataset("sunspots")
@@ -72,6 +91,7 @@ print(forecast)
 
 comparison = benchmark_dataset("sunspots")
 print(comparison[["model", "rmse", "smape"]])
+print(render_leaderboard(comparison))
 ```
 
 ## Evaluation principles
@@ -94,6 +114,7 @@ print(comparison[["model", "rmse", "smape"]])
 - Lag-feature machine learning
 - Walk-forward backtesting
 - Multi-dataset benchmark execution
+- Per-dataset and overall benchmark leaderboards
 
 ### Extension path
 
