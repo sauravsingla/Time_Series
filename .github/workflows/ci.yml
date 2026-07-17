@@ -27,8 +27,17 @@ jobs:
       - name: Test
         run: pytest
       - name: Run open dataset benchmarks
-        run: time-series-benchmark --output benchmark_results.csv
+        run: |
+          time-series-benchmark \
+            --output benchmark_results.csv \
+            --leaderboard generated/BENCHMARK_LEADERBOARD.md
+          grep -q "## Overall leaderboard" generated/BENCHMARK_LEADERBOARD.md
+          grep -q "## co2" generated/BENCHMARK_LEADERBOARD.md
+          grep -q "## real_gdp" generated/BENCHMARK_LEADERBOARD.md
+          grep -q "## sunspots" generated/BENCHMARK_LEADERBOARD.md
       - uses: actions/upload-artifact@v4
         with:
-          name: benchmark-results-py${{ matrix.python-version }}
-          path: benchmark_results.csv
+          name: benchmark-leaderboard-py${{ matrix.python-version }}
+          path: |
+            benchmark_results.csv
+            generated/BENCHMARK_LEADERBOARD.md
