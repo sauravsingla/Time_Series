@@ -21,8 +21,14 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - name: Install
-        run: python -m pip install --upgrade pip && pip install -e '.[dev]'
+        run: python -m pip install --upgrade pip && pip install -e '.[classical,dev]'
       - name: Lint
         run: ruff check src tests
       - name: Test
         run: pytest
+      - name: Run open dataset benchmarks
+        run: time-series-benchmark --output benchmark_results.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-py${{ matrix.python-version }}
+          path: benchmark_results.csv
