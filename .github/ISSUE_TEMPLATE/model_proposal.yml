@@ -1,0 +1,65 @@
+name: Model or benchmark proposal
+description: Propose a forecasting model, dataset or evaluation improvement.
+title: "[Proposal]: "
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Proposal type
+      options:
+        - Forecasting model
+        - Dataset
+        - Metric or evaluation protocol
+        - Documentation example
+        - Benchmark infrastructure
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What forecasting gap does this address, and for which data characteristics?
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Proposed approach
+      description: Explain assumptions, dependencies, fitting procedure and forecast behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Benchmark evidence plan
+      description: Name the open dataset or deterministic fixture, baselines, metrics and holdout strategy.
+    validations:
+      required: true
+  - type: textarea
+    id: cost
+    attributes:
+      label: Runtime and dependency cost
+      description: Describe CPU/GPU needs, expected runtime and new dependencies.
+    validations:
+      required: true
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Known limitations
+      description: State failure modes and cases where the method should not be used.
+    validations:
+      required: true
+  - type: checkboxes
+    id: acceptance
+    attributes:
+      label: Acceptance standard
+      options:
+        - label: I will compare against naive and seasonal-naive baselines where appropriate.
+          required: true
+        - label: I will preserve temporal order and prevent future-data leakage.
+          required: true
+        - label: I will add tests and reproducible commands.
+          required: true
+        - label: I will document cases where the method does not improve results.
+          required: true
