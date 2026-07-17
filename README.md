@@ -1,28 +1,40 @@
 # Time Series Forecasting Reference
 
-A practical collection of **traditional and modern time-series methods**, organized so that students and practitioners can use the repository as a reliable reference rather than a set of disconnected notebooks.
+A practical, tested collection of **traditional, statistical and machine-learning time-series methods**. The repository is designed as an outside-world reference: reproducible datasets, leakage-safe evaluation, strong baselines, reusable Python code and CI-generated benchmark results.
 
-## What this repository covers
+## Implemented coverage
 
-| Problem | Recommended starting point | Advanced direction |
-|---|---|---|
-| Univariate forecasting | Naive, seasonal naive, moving average, drift | ARIMA/SARIMA, Prophet, gradient boosting, N-BEATS |
-| Multivariate forecasting | VAR/VECM | LSTM/GRU, Temporal Fusion Transformer, PatchTST |
-| Irregular demand | Seasonal baseline, Croston-style methods | Probabilistic and hierarchical forecasting |
-| Anomaly detection | Rolling statistics and residual thresholds | Autoencoders, isolation methods, transformer embeddings |
-| Model evaluation | Temporal split and walk-forward backtesting | Nested temporal validation and probabilistic scoring |
+| Layer | Included methods |
+|---|---|
+| Baselines | Naive, seasonal naive, moving average, drift |
+| Classical statistics | Autoregression, Holt-Winters exponential smoothing |
+| Machine learning | Regularized lag regression with recursive forecasting |
+| Evaluation | Temporal split, expanding-window backtesting, MAE, RMSE, MAPE, sMAPE |
+| Reproducibility | Open datasets, command-line benchmark, tests and CI artifacts |
 
-The original notebooks remain available as historical learning material. The reusable `timeseries_reference` package adds tested Python 3 implementations for the foundations every forecasting project needs.
+The original notebooks remain as historical learning material. New maintained code lives in `src/timeseries_reference` and targets Python 3.10+.
+
+## Open datasets
+
+The benchmark uses datasets distributed through `statsmodels`, so no private data, credentials or manual downloads are required.
+
+| Dataset | Frequency | Main pattern | Default seasonality |
+|---|---:|---|---:|
+| Sunspots | Annual | Long cycles and changing amplitude | 11 |
+| Mauna Loa CO2 | Weekly | Strong trend and yearly seasonality | 52 |
+| US real GDP | Quarterly | Economic trend and structural change | 4 |
+
+These datasets exercise different forecasting problems rather than repeatedly testing models on one convenient series.
 
 ## Repository structure
 
 ```text
 .
-├── src/timeseries_reference/   # reusable forecasting utilities
-├── tests/                      # deterministic unit tests
-├── .github/workflows/ci.yml    # linting and tests on Python 3.10-3.12
+├── src/timeseries_reference/   # reusable forecasting package
+├── tests/                      # deterministic unit and integration tests
+├── .github/workflows/ci.yml    # lint, tests and benchmark execution
 ├── *.ipynb                     # original worked examples
-└── pyproject.toml              # modern packaging and dependencies
+└── pyproject.toml              # packaging, dependencies and CLI entry point
 ```
 
 ## Quick start
@@ -32,31 +44,34 @@ git clone https://github.com/sauravsingla/Time_Series.git
 cd Time_Series
 python -m venv .venv
 source .venv/bin/activate       # Windows: .venv\Scripts\activate
-pip install -e '.[dev,classical]'
+pip install -e '.[classical,dev]'
+ruff check src tests
 pytest
+time-series-benchmark --output benchmark_results.csv
 ```
 
-## Minimal forecasting example
+Run one dataset only:
+
+```bash
+time-series-benchmark --dataset co2 --output co2_results.csv
+```
+
+The output is a sorted CSV with dataset, frequency, model, train/test size, MAE, RMSE and sMAPE. CI runs the full benchmark on Python 3.10, 3.11 and 3.12 and uploads the result files as workflow artifacts.
+
+## Python example
 
 ```python
-from timeseries_reference import (
-    NaiveForecaster,
-    SeasonalNaiveForecaster,
-    expanding_window_backtest,
-)
+from timeseries_reference.benchmark import benchmark_dataset
+from timeseries_reference.datasets import load_dataset
+from timeseries_reference.ml import LagRegressionForecaster
 
-values = [120, 128, 133, 121, 130, 136, 124, 132, 139]
+sunspots = load_dataset("sunspots")
+model = LagRegressionForecaster(lags=11).fit(sunspots.values[:-12])
+forecast = model.predict(horizon=12)
+print(forecast)
 
-result = expanding_window_backtest(
-    values,
-    model_factory=lambda: SeasonalNaiveForecaster(season_length=3),
-    initial_train_size=6,
-)
-
-print(result.mae, result.rmse)
-
-model = NaiveForecaster().fit(values)
-print(model.predict(horizon=3))
+comparison = benchmark_dataset("sunspots")
+print(comparison[["model", "rmse", "smape"]])
 ```
 
 ## Evaluation principles
@@ -64,54 +79,52 @@ print(model.predict(horizon=3))
 1. Never randomly shuffle time-series observations.
 2. Fit preprocessing only on the training window.
 3. Compare every advanced model against naive and seasonal-naive baselines.
-4. Report more than one metric; MAE/RMSE measure scale-dependent error while sMAPE helps comparison across series.
-5. Use rolling or expanding-window backtests instead of judging a model on one convenient split.
-6. Track forecast horizon, data frequency, latency and retraining cost alongside accuracy.
+4. Report multiple metrics because no single score explains every forecast failure.
+5. Prefer rolling or expanding-window evaluation for final model selection.
+6. Record horizon, frequency, latency and retraining cost alongside accuracy.
+7. Treat an advanced model as useful only when it consistently beats a simple baseline.
 
 ## Traditional-to-modern roadmap
 
-### Foundations
+### Implemented now
 
-- Missing-value treatment and resampling
-- Trend, seasonality and decomposition
-- Stationarity, ACF/PACF and differencing
-- Exponential smoothing, ARIMA/SARIMA and VAR
-- Leakage-safe validation and residual diagnostics
+- Missing-value validation and chronological splitting
+- Naive, seasonal, moving-average and drift baselines
+- Autoregression and Holt-Winters forecasting
+- Lag-feature machine learning
+- Walk-forward backtesting
+- Multi-dataset benchmark execution
 
-### Machine learning
+### Extension path
 
-- Lag, rolling and calendar features
-- Regularized linear models
-- Random forest and gradient boosting
-- Direct, recursive and multi-output forecasting strategies
+- ARIMA/SARIMA with order selection and residual diagnostics
+- Gradient boosting with calendar and rolling features
+- Probabilistic prediction intervals and quantile losses
+- Multivariate VAR/VECM reference pipelines
+- LSTM/GRU, N-BEATS and PatchTST examples
+- Hierarchical forecasting and anomaly detection
 
-### Deep learning and current architectures
+Modern methods are not automatically better. Dataset size, forecast horizon, seasonality, operational cost and baseline performance should determine the final model.
 
-- LSTM and GRU sequence models
-- Temporal convolutional networks
-- N-BEATS/N-HiTS
-- Temporal Fusion Transformer
-- PatchTST and transformer-based long-horizon forecasting
-- Probabilistic forecasting with quantiles or full predictive distributions
+## Quality standard
 
-Advanced models are intentionally listed as directions rather than presented as universally better choices. Dataset size, horizon, seasonality, operational cost and baseline performance should determine the model.
+Every maintained implementation should include:
 
-## Quality checks
-
-```bash
-ruff check src tests
-pytest
-```
-
-CI runs these checks on Python 3.10, 3.11 and 3.12 for each pull request.
+- explicit input validation;
+- no future-data leakage;
+- a simple baseline comparison;
+- deterministic tests;
+- an open reproducible dataset;
+- documented assumptions and failure modes;
+- compatibility with the supported Python versions.
 
 ## Notebook status
 
-Some original Colab notebooks were created with older library versions and may need small API updates before execution. New reusable code targets Python 3.10+ and avoids deprecated notebook-only patterns. Future notebook modernization should preserve the original learning intent while adding reproducible data loading, fixed random seeds, baseline comparison and walk-forward validation.
+Some original Colab notebooks were created with older library versions, including legacy kernel metadata. They are retained for provenance, while the tested package provides the recommended reference implementation. Notebook modernization can continue as focused follow-up commits without weakening the stable package.
 
 ## Contributing
 
-Focused contributions are welcome: one problem, one clear implementation, tests, a reproducible example and a short explanation of when the method should or should not be used.
+Keep contributions focused: one forecasting problem, one clear implementation, tests, a reproducible dataset and a short explanation of when the method should or should not be used.
 
 ## License
 
