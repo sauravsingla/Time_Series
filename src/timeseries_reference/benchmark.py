@@ -11,6 +11,7 @@ import pandas as pd
 from .baselines import DriftForecaster, NaiveForecaster, SeasonalNaiveForecaster
 from .classical import AutoRegressiveForecaster, ExponentialSmoothingForecaster
 from .datasets import available_datasets, load_dataset
+from .leaderboard import write_leaderboard
 from .metrics import mae, rmse, smape
 from .ml import LagRegressionForecaster
 
@@ -63,11 +64,19 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", choices=available_datasets(), action="append")
     parser.add_argument("--output", type=Path, default=Path("benchmark_results.csv"))
+    parser.add_argument(
+        "--leaderboard",
+        type=Path,
+        default=Path("docs/BENCHMARK_LEADERBOARD.md"),
+        help="Markdown leaderboard generated from the benchmark results",
+    )
     args = parser.parse_args()
     results = run_benchmarks(tuple(args.dataset) if args.dataset else None)
     results.to_csv(args.output, index=False)
+    leaderboard_path = write_leaderboard(results, args.leaderboard)
     print(results.to_string(index=False))
     print(f"\nSaved benchmark results to {args.output}")
+    print(f"Saved benchmark leaderboard to {leaderboard_path}")
 
 
 if __name__ == "__main__":
