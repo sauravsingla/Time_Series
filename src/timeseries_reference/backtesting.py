@@ -11,8 +11,13 @@ from .metrics import mae, rmse
 
 
 class Forecaster(Protocol):
-    def fit(self, values: list[float] | np.ndarray) -> "Forecaster": ...
-    def predict(self, horizon: int) -> np.ndarray: ...
+    def fit(self, values: list[float] | np.ndarray) -> "Forecaster":
+        """Fit a model to an ordered training series."""
+        ...
+
+    def predict(self, horizon: int) -> np.ndarray:
+        """Forecast the requested number of future steps."""
+        ...
 
 
 @dataclass(frozen=True)
