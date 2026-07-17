@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "time-series-reference"
-version = "0.1.0"
+version = "0.2.0"
 description = "Practical reference implementations for classical and modern time-series forecasting workflows"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,6 +19,14 @@ dependencies = [
 classical = ["statsmodels>=0.14", "scikit-learn>=1.4"]
 modern = ["torch>=2.2"]
 dev = ["pytest>=8.0", "ruff>=0.5", "mypy>=1.10"]
+all = [
+  "statsmodels>=0.14",
+  "scikit-learn>=1.4",
+  "torch>=2.2",
+]
+
+[project.scripts]
+time-series-benchmark = "timeseries_reference.benchmark:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
