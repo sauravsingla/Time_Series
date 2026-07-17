@@ -12,6 +12,7 @@ from timeseries_reference import (
     smape,
     temporal_train_test_split,
 )
+from timeseries_reference.leaderboard import rank_results, render_leaderboard
 
 
 def test_metrics_return_expected_values() -> None:
@@ -49,6 +50,35 @@ def test_expanding_window_backtest_is_leakage_free() -> None:
     assert result.mae == 1.0
 
 
+def test_leaderboard_uses_scale_independent_dataset_ranks() -> None:
+    results = pd.DataFrame(
+        [
+            {"dataset": "small", "model": "a", "mae": 1.0, "rmse": 1.0, "smape": 10.0},
+            {"dataset": "small", "model": "b", "mae": 2.0, "rmse": 2.0, "smape": 20.0},
+            {"dataset": "large", "model": "a", "mae": 200.0, "rmse": 200.0, "smape": 20.0},
+            {"dataset": "large", "model": "b", "mae": 100.0, "rmse": 100.0, "smape": 10.0},
+        ]
+    )
+    ranked, overall = rank_results(results)
+    assert ranked.groupby("dataset")["rank"].min().eq(1).all()
+    assert overall["average_rank"].tolist() == [1.5, 1.5]
+    assert set(overall["model"]) == {"a", "b"}
+
+
+def test_leaderboard_markdown_contains_overall_and_dataset_sections() -> None:
+    results = pd.DataFrame(
+        [
+            {"dataset": "demo", "model": "naive", "mae": 2.0, "rmse": 3.0, "smape": 4.0},
+            {"dataset": "demo", "model": "drift", "mae": 1.0, "rmse": 2.0, "smape": 3.0},
+        ]
+    )
+    markdown = render_leaderboard(results)
+    assert "# Benchmark Leaderboard" in markdown
+    assert "## Overall leaderboard" in markdown
+    assert "## demo" in markdown
+    assert "drift" in markdown
+
+
 def test_invalid_inputs_raise_clear_errors() -> None:
     with pytest.raises(ValueError):
         mae([], [])
@@ -56,3 +86,5 @@ def test_invalid_inputs_raise_clear_errors() -> None:
         temporal_train_test_split(pd.Series([1, 2]), test_size=1, gap=1)
     with pytest.raises(RuntimeError):
         NaiveForecaster().predict(1)
+    with pytest.raises(ValueError):
+        rank_results(pd.DataFrame())
