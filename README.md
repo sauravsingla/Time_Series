@@ -9,27 +9,33 @@ A tested, reproducible reference for learning and applying **classical, statisti
 
 > Start with strong baselines, validate chronologically, and adopt a more complex model only when the evidence supports it.
 
-## Navigation
+## Documentation
 
-- [Benchmark leaderboard](docs/BENCHMARK_LEADERBOARD.md)
-- [Benchmark methodology](docs/BENCHMARK_METHODOLOGY.md)
-- [Installation and quick start](#quick-start)
-- [Learning path](#recommended-learning-path)
-- [Python API example](#python-api-example)
-- [Contributing](CONTRIBUTING.md)
-- [Security policy](SECURITY.md)
-- [Citation](CITATION.cff)
+| Need | Start here |
+|---|---|
+| Understand the project | [Documentation hub](docs/README.md) |
+| Compare models | [Benchmark leaderboard](docs/BENCHMARK_LEADERBOARD.md) |
+| Audit the evaluation | [Benchmark methodology](docs/BENCHMARK_METHODOLOGY.md) |
+| Resolve common questions | [FAQ](docs/FAQ.md) |
+| Fix installation or runtime issues | [Troubleshooting](docs/TROUBLESHOOTING.md) |
+| Learn terminology | [Glossary](docs/GLOSSARY.md) |
+| Contribute | [Contribution guide](CONTRIBUTING.md) |
+| Request help | [Support guide](SUPPORT.md) |
+| Review project changes | [Changelog](CHANGELOG.md) |
+| Report a vulnerability | [Security policy](SECURITY.md) |
+| Cite the project | [Citation metadata](CITATION.cff) |
 
 ## Why this repository is useful
 
 Many forecasting repositories contain isolated notebooks without reliable validation or repeatable results. This project provides a stronger reference structure:
 
-- **Traditional and modern progression:** naive baselines, autoregression, exponential smoothing and lag-based machine learning.
+- **Traditional-to-modern progression:** naive baselines, autoregression, exponential smoothing and lag-based machine learning.
 - **Open data:** no private files, credentials or manual downloads are required for the maintained benchmark.
 - **Leakage-safe evaluation:** chronological splitting and expanding-window backtesting are built into the package.
 - **Transparent comparison:** every model is assessed with MAE, RMSE and sMAPE.
-- **Reproducibility:** the same command generates raw results and the published Markdown leaderboard.
+- **Reproducibility:** one command generates raw results and the published Markdown leaderboard.
 - **Software quality:** Python packaging, input validation, tests, linting and multi-version CI.
+- **Honest reporting:** weak models and simple-model wins remain visible rather than being removed.
 
 ## Implemented coverage
 
@@ -42,11 +48,11 @@ Many forecasting repositories contain isolated notebooks without reliable valida
 | Data | Sunspots, Mauna Loa CO2 and US real GDP |
 | Reproducibility | CLI benchmark, generated leaderboard, tests and CI artifacts |
 
-The original notebooks remain available as historical learning material. The recommended reusable implementation lives in `src/timeseries_reference` and targets Python 3.10+.
+The original notebooks remain as historical learning material. The recommended reusable implementation lives in `src/timeseries_reference` and targets Python 3.10+.
 
 ## Benchmark leaderboard
 
-The full per-dataset results are published in [`docs/BENCHMARK_LEADERBOARD.md`](docs/BENCHMARK_LEADERBOARD.md).
+The full overall and per-dataset results are published in [`docs/BENCHMARK_LEADERBOARD.md`](docs/BENCHMARK_LEADERBOARD.md).
 
 | Overall rank | Model | Average dataset rank | Dataset wins |
 |---:|---|---:|---:|
@@ -57,9 +63,9 @@ The full per-dataset results are published in [`docs/BENCHMARK_LEADERBOARD.md`](
 | 5 | Naive | 4.3333 | 1 |
 | 6 | Drift | 5.3333 | 0 |
 
-Models are ranked by RMSE within each dataset and then by average dataset rank. Raw errors are not averaged across datasets because GDP, CO2 and sunspot values have different scales. The methodology is documented in [`docs/BENCHMARK_METHODOLOGY.md`](docs/BENCHMARK_METHODOLOGY.md).
+Models are ranked by RMSE within each dataset and then by average dataset rank. Raw errors are not averaged across datasets because GDP, CO2 and sunspot values have different scales. The protocol, assumptions and limitations are documented in [`docs/BENCHMARK_METHODOLOGY.md`](docs/BENCHMARK_METHODOLOGY.md).
 
-The naive model winning the real-GDP dataset is intentionally retained. A trustworthy benchmark reports the evidence instead of assuming a more complex model must win.
+The naive model winning the real-GDP dataset is intentionally retained. A trustworthy benchmark reports evidence instead of assuming a more complex model must win.
 
 ## Open datasets
 
@@ -167,16 +173,26 @@ LSTM, GRU, N-BEATS, N-HiTS, Temporal Fusion Transformer and PatchTST can be valu
 ```text
 .
 ├── docs/
-│   ├── BENCHMARK_LEADERBOARD.md   # generated overall and per-dataset rankings
-│   └── BENCHMARK_METHODOLOGY.md   # evaluation and ranking protocol
-├── src/timeseries_reference/      # maintained forecasting package
-├── tests/                         # unit and integration tests
-├── .github/workflows/ci.yml       # lint, tests and benchmark execution
-├── *.ipynb                        # historical worked examples
-├── CONTRIBUTING.md                # contribution and reproducibility standard
-├── SECURITY.md                    # private vulnerability reporting guidance
-├── CITATION.cff                   # citation metadata
-└── pyproject.toml                 # packaging, dependencies and CLI entry point
+│   ├── README.md                    # documentation entry point
+│   ├── BENCHMARK_LEADERBOARD.md     # generated model rankings
+│   ├── BENCHMARK_METHODOLOGY.md     # evaluation and ranking protocol
+│   ├── FAQ.md                       # common questions
+│   ├── TROUBLESHOOTING.md           # installation and runtime help
+│   └── GLOSSARY.md                  # forecasting terminology
+├── src/timeseries_reference/        # maintained forecasting package
+├── tests/                           # unit and integration tests
+├── .github/
+│   ├── workflows/ci.yml             # lint, tests and benchmark execution
+│   ├── ISSUE_TEMPLATE/              # structured bug and model proposals
+│   └── PULL_REQUEST_TEMPLATE.md      # evidence-focused PR checklist
+├── *.ipynb                          # historical worked examples
+├── CONTRIBUTING.md                  # contribution standard
+├── SUPPORT.md                       # support scope and request quality
+├── SECURITY.md                      # vulnerability reporting guidance
+├── CODE_OF_CONDUCT.md               # community expectations
+├── CHANGELOG.md                     # notable project changes
+├── CITATION.cff                     # citation metadata
+└── pyproject.toml                   # packaging, dependencies and CLI
 ```
 
 ## Roadmap
@@ -194,15 +210,19 @@ The next high-value extensions are:
 
 A method should move from roadmap to maintained code only when it has tests, an open dataset, leakage-safe evaluation and reproducible benchmark results.
 
-## Notebook status
+## Project status and limitations
 
-Some historical Colab notebooks were created with older library versions and metadata. They are retained for provenance and learning context. The tested package and benchmark are the recommended reference implementation for new work.
+This is a reference and teaching implementation, not a turnkey production forecasting service. Production systems additionally need data contracts, monitoring, retraining policy, prediction intervals, alerting, rollback, access controls and domain-specific acceptance thresholds.
 
-## Contributing
+Some historical Colab notebooks use older library versions and metadata. They remain available for provenance and learning context, while the tested package and benchmark are the recommended path for new work.
+
+## Contributing and support
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a change. Contributions should focus on one clear forecasting problem and include tests, an open dataset or deterministic fixture, baseline comparison and documented limitations.
 
-Community participation is governed by [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Security-sensitive concerns should follow [`SECURITY.md`](SECURITY.md).
+Use the structured GitHub issue forms for reproducible bugs and model proposals. The [`SUPPORT.md`](SUPPORT.md) guide explains scope and the information needed for useful assistance.
+
+Community participation is governed by [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Security-sensitive concerns must follow [`SECURITY.md`](SECURITY.md).
 
 ## Citation
 
