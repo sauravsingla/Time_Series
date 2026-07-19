@@ -1,0 +1,9 @@
+# Default reviewer for all repository changes
+* @sauravsingla
+
+# Higher-risk forecasting and release areas
+/.github/ @sauravsingla
+/pyproject.toml @sauravsingla
+/src/ @sauravsingla
+/tests/ @sauravsingla
+/docs/BENCHMARK_*.md @sauravsingla
