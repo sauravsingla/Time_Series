@@ -15,8 +15,8 @@ jobs:
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -35,7 +35,7 @@ jobs:
           grep -q "## co2" generated/BENCHMARK_LEADERBOARD.md
           grep -q "## real_gdp" generated/BENCHMARK_LEADERBOARD.md
           grep -q "## sunspots" generated/BENCHMARK_LEADERBOARD.md
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: benchmark-leaderboard-py${{ matrix.python-version }}
           path: |
