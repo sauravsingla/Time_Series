@@ -1,33 +1,45 @@
-# Time Series Forecasting Reference
+# Python Time-Series Forecasting: Backtesting, Baselines and Model Comparison
 
 [![CI](https://github.com/sauravsingla/Time_Series/actions/workflows/ci.yml/badge.svg)](https://github.com/sauravsingla/Time_Series/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Reproducible benchmark](https://img.shields.io/badge/benchmark-reproducible-brightgreen)](docs/BENCHMARK_LEADERBOARD.md)
 
-A tested, reproducible reference for learning and applying **classical, statistical and machine-learning time-series forecasting**. It combines historical notebooks with a maintained Python package, open datasets, leakage-safe evaluation, automated tests and a cross-dataset model leaderboard.
+A tested and reproducible Python reference for **time-series forecasting**, **forecasting backtesting**, **walk-forward validation**, **rolling-origin evaluation**, **statistical forecasting**, and **machine-learning forecasting**.
+
+The repository combines historical notebooks with a maintained Python package, open datasets, leakage-safe evaluation, automated tests and a cross-dataset model leaderboard. It is relevant to sales forecasting, demand forecasting, economic forecasting, energy-load forecasting, traffic forecasting, capacity planning and forecast-based anomaly detection.
 
 > Start with strong baselines, validate chronologically, and adopt a more complex model only when the evidence supports it.
 
-## Documentation
+## Find the right forecasting resource
 
-| Need | Start here |
+| Goal | Start here |
 |---|---|
-| Understand the project | [Documentation hub](docs/README.md) |
-| Compare models | [Benchmark leaderboard](docs/BENCHMARK_LEADERBOARD.md) |
-| Audit the evaluation | [Benchmark methodology](docs/BENCHMARK_METHODOLOGY.md) |
-| Resolve common questions | [FAQ](docs/FAQ.md) |
+| Learn Python time-series forecasting | [Practical forecasting guide](docs/time-series-forecasting-guide.md) |
+| Choose a model for sales, demand or economic forecasting | [Model selection and use cases](docs/model-selection-and-use-cases.md) |
+| Compare forecasting models | [Benchmark leaderboard](docs/BENCHMARK_LEADERBOARD.md) |
+| Understand walk-forward validation and backtesting | [Benchmark methodology](docs/BENCHMARK_METHODOLOGY.md) |
+| Resolve common forecasting questions | [FAQ](docs/FAQ.md) |
 | Fix installation or runtime issues | [Troubleshooting](docs/TROUBLESHOOTING.md) |
-| Learn terminology | [Glossary](docs/GLOSSARY.md) |
-| Contribute | [Contribution guide](CONTRIBUTING.md) |
-| Request help | [Support guide](SUPPORT.md) |
-| Review project changes | [Changelog](CHANGELOG.md) |
-| Report a vulnerability | [Security policy](SECURITY.md) |
-| Cite the project | [Citation metadata](CITATION.cff) |
+| Learn forecasting terminology | [Glossary](docs/GLOSSARY.md) |
+| Browse all documentation | [Documentation hub](docs/README.md) |
+
+## Forecasting use cases
+
+| Use case | Typical challenges | Suitable starting points |
+|---|---|---|
+| Sales forecasting | promotions, holidays, changing demand | seasonal naive, Holt-Winters, lag regression |
+| Demand forecasting | calendar effects, stockouts, intermittent demand | seasonal baselines, exponential smoothing, machine learning |
+| Financial forecasting | non-stationarity, regime changes, weak signal | naive, drift, autoregression, strict backtesting |
+| Energy-load forecasting | weather effects, peaks, multiple seasonalities | seasonal baselines, exogenous regression, neural models when justified |
+| Traffic and capacity forecasting | spikes, missing data, operational constraints | moving average, autoregression, lag regression |
+| Economic forecasting | structural breaks, revisions, long horizons | drift, autoregression, ARIMA, VAR |
+| Inventory forecasting | intermittent demand, service levels, lead time | seasonal naive, Croston-family methods, probabilistic forecasts |
+| Anomaly detection | changing baseline and threshold calibration | residuals from validated forecasting models |
 
 ## Why this repository is useful
 
-Many forecasting repositories contain isolated notebooks without reliable validation or repeatable results. This project provides a stronger reference structure:
+Many forecasting repositories contain isolated notebooks without reliable validation or repeatable results. This project provides:
 
 - **Traditional-to-modern progression:** naive baselines, autoregression, exponential smoothing and lag-based machine learning.
 - **Open data:** no private files, credentials or manual downloads are required for the maintained benchmark.
@@ -37,7 +49,7 @@ Many forecasting repositories contain isolated notebooks without reliable valida
 - **Software quality:** Python packaging, input validation, tests, linting and multi-version CI.
 - **Honest reporting:** weak models and simple-model wins remain visible rather than being removed.
 
-## Implemented coverage
+## Implemented forecasting coverage
 
 | Layer | Included capability |
 |---|---|
@@ -45,14 +57,14 @@ Many forecasting repositories contain isolated notebooks without reliable valida
 | Classical statistics | Autoregression, Holt-Winters exponential smoothing |
 | Machine learning | Regularized lag regression with recursive forecasting |
 | Evaluation | Temporal split, expanding-window backtesting, MAE, RMSE, MAPE, sMAPE |
-| Data | Sunspots, Mauna Loa CO2 and US real GDP |
+| Open datasets | Sunspots, Mauna Loa CO2 and US real GDP |
 | Reproducibility | CLI benchmark, generated leaderboard, tests and CI artifacts |
 
-The original notebooks remain as historical learning material. The recommended reusable implementation lives in `src/timeseries_reference` and targets Python 3.10+.
+The recommended reusable implementation lives in `src/timeseries_reference` and targets Python 3.10+.
 
 ## Benchmark leaderboard
 
-The full overall and per-dataset results are published in [`docs/BENCHMARK_LEADERBOARD.md`](docs/BENCHMARK_LEADERBOARD.md).
+The complete overall and per-dataset results are published in [`docs/BENCHMARK_LEADERBOARD.md`](docs/BENCHMARK_LEADERBOARD.md).
 
 | Overall rank | Model | Average dataset rank | Dataset wins |
 |---:|---|---:|---:|
@@ -63,11 +75,11 @@ The full overall and per-dataset results are published in [`docs/BENCHMARK_LEADE
 | 5 | Naive | 4.3333 | 1 |
 | 6 | Drift | 5.3333 | 0 |
 
-Models are ranked by RMSE within each dataset and then by average dataset rank. Raw errors are not averaged across datasets because GDP, CO2 and sunspot values have different scales. The protocol, assumptions and limitations are documented in [`docs/BENCHMARK_METHODOLOGY.md`](docs/BENCHMARK_METHODOLOGY.md).
+Models are ranked by RMSE within each dataset and then by average dataset rank. Raw errors are not averaged across datasets because GDP, CO2 and sunspot values have different scales.
 
 The naive model winning the real-GDP dataset is intentionally retained. A trustworthy benchmark reports evidence instead of assuming a more complex model must win.
 
-## Open datasets
+## Open forecasting datasets
 
 All maintained benchmark datasets are loaded through `statsmodels`.
 
@@ -76,8 +88,6 @@ All maintained benchmark datasets are loaded through `statsmodels`.
 | Sunspots | Annual | Long cycles and changing amplitude | 11 |
 | Mauna Loa CO2 | Weekly | Trend, missing observations and yearly seasonality | 52 |
 | US real GDP | Quarterly | Economic trend and structural change | 4 |
-
-These series intentionally represent different behaviours rather than repeating one favourable data pattern.
 
 ## Quick start
 
@@ -90,7 +100,7 @@ python -m pip install --upgrade pip
 pip install -e '.[classical,dev]'
 ```
 
-Run the complete validation suite:
+Run the complete validation and benchmark workflow:
 
 ```bash
 ruff check src tests
@@ -100,7 +110,7 @@ time-series-benchmark \
   --leaderboard docs/BENCHMARK_LEADERBOARD.md
 ```
 
-Run only one dataset:
+Run one dataset:
 
 ```bash
 time-series-benchmark \
@@ -109,9 +119,9 @@ time-series-benchmark \
   --leaderboard co2_leaderboard.md
 ```
 
-The command writes a machine-readable CSV and a human-readable Markdown leaderboard. CI repeats the workflow on Python 3.10, 3.11 and 3.12 and uploads both outputs as artifacts.
+The command writes a machine-readable CSV and a human-readable Markdown leaderboard. CI repeats the workflow on Python 3.10, 3.11 and 3.12.
 
-## Python API example
+## Python forecasting API example
 
 ```python
 from timeseries_reference.benchmark import benchmark_dataset
@@ -131,77 +141,51 @@ print(comparison[["model", "rmse", "smape"]])
 print(render_leaderboard(comparison))
 ```
 
-## Recommended learning path
+## Model-selection path
 
-### 1. Understand the signal
-
-Study frequency, missing values, trend, seasonality, cycles, structural breaks and forecast horizon before selecting a model.
-
-### 2. Establish baselines
-
-Run naive, seasonal-naive, moving-average and drift forecasts. These define the minimum standard that advanced approaches should beat.
-
-### 3. Add statistical models
-
-Use autoregression and Holt-Winters when lag dependence, trend or repeated seasonal structure is visible.
-
-### 4. Build leakage-safe machine learning
-
-Create lag features only from past observations. Fit preprocessing exclusively on each training window and use recursive or direct strategies deliberately.
-
-### 5. Evaluate over time
-
-A single holdout is useful for a compact benchmark. Final model selection should use rolling or expanding-window backtesting and inspect residual behaviour.
-
-### 6. Introduce advanced architectures only when justified
-
-LSTM, GRU, N-BEATS, N-HiTS, Temporal Fusion Transformer and PatchTST can be valuable for suitable datasets, but they should be compared against strong simple baselines and evaluated for latency, stability and retraining cost.
+1. Understand frequency, missing values, trend, seasonality, cycles, structural breaks and forecast horizon.
+2. Establish naive, seasonal-naive, moving-average and drift baselines.
+3. Add autoregression and Holt-Winters where lag dependence, trend or stable seasonality exists.
+4. Build leakage-safe machine-learning features using only past information.
+5. Evaluate with chronological holdouts and rolling or expanding-window backtesting.
+6. Introduce LSTM, GRU, N-BEATS, N-HiTS, Temporal Fusion Transformer or PatchTST only when justified by data scale and repeatable improvement.
 
 ## Evaluation principles
 
 1. Never randomly shuffle a forecasting target.
 2. Fit transformations and feature generation only on training data.
-3. Compare every advanced model with naive and seasonal-naive baselines.
-4. Report multiple metrics because no single score captures every error pattern.
-5. Use rolling or expanding-window evaluation for final decisions.
-6. Record horizon, frequency, runtime and retraining cost alongside accuracy.
-7. Surface model failures instead of silently removing them from results.
+3. Compare advanced models with naive and seasonal-naive baselines.
+4. Report several metrics because no single score captures every error pattern.
+5. Match the validation horizon to the real operational forecast horizon.
+6. Record runtime, retraining cost and stability alongside accuracy.
+7. Surface model failures instead of silently removing them.
 8. Treat complexity as a cost that must be justified by repeatable improvement.
 
-## Repository structure
+## Search topics covered
 
-```text
-.
-├── docs/
-│   ├── README.md                    # documentation entry point
-│   ├── BENCHMARK_LEADERBOARD.md     # generated model rankings
-│   ├── BENCHMARK_METHODOLOGY.md     # evaluation and ranking protocol
-│   ├── FAQ.md                       # common questions
-│   ├── TROUBLESHOOTING.md           # installation and runtime help
-│   └── GLOSSARY.md                  # forecasting terminology
-├── src/timeseries_reference/        # maintained forecasting package
-├── tests/                           # unit and integration tests
-├── .github/
-│   ├── workflows/ci.yml             # lint, tests and benchmark execution
-│   ├── ISSUE_TEMPLATE/              # structured bug and model proposals
-│   └── PULL_REQUEST_TEMPLATE.md      # evidence-focused PR checklist
-├── *.ipynb                          # historical worked examples
-├── CONTRIBUTING.md                  # contribution standard
-├── SUPPORT.md                       # support scope and request quality
-├── SECURITY.md                      # vulnerability reporting guidance
-├── CODE_OF_CONDUCT.md               # community expectations
-├── CHANGELOG.md                     # notable project changes
-├── CITATION.cff                     # citation metadata
-└── pyproject.toml                   # packaging, dependencies and CLI
-```
+This repository is relevant to:
+
+- Python time-series forecasting examples;
+- forecasting backtesting and walk-forward validation;
+- rolling-origin and expanding-window evaluation;
+- autoregression and Holt-Winters exponential smoothing;
+- ARIMA and SARIMA model-selection concepts;
+- machine-learning forecasting with lag features;
+- LSTM, GRU, N-BEATS, N-HiTS, TFT and PatchTST evaluation;
+- sales, demand, inventory and energy forecasting;
+- economic and financial time-series forecasting;
+- probabilistic forecasting and prediction intervals;
+- intermittent-demand forecasting;
+- forecast-based anomaly detection;
+- MAE, RMSE, MAPE, sMAPE and MASE.
 
 ## Roadmap
 
-The next high-value extensions are:
+High-value future extensions include:
 
-- ARIMA and SARIMA with order selection and residual diagnostics;
+- ARIMA and SARIMA with residual diagnostics;
 - gradient boosting with calendar and rolling features;
-- probabilistic intervals, quantile loss and calibration evaluation;
+- probabilistic intervals, quantile loss and calibration;
 - multivariate VAR and VECM pipelines;
 - intermittent-demand forecasting;
 - hierarchical forecasting and reconciliation;
@@ -210,24 +194,16 @@ The next high-value extensions are:
 
 A method should move from roadmap to maintained code only when it has tests, an open dataset, leakage-safe evaluation and reproducible benchmark results.
 
-## Project status and limitations
+## Project status
 
-This is a reference and teaching implementation, not a turnkey production forecasting service. Production systems additionally need data contracts, monitoring, retraining policy, prediction intervals, alerting, rollback, access controls and domain-specific acceptance thresholds.
+This is a reference and teaching implementation, not a turnkey production forecasting service. Production systems additionally require data contracts, monitoring, retraining policy, prediction intervals, alerting, rollback, access controls and domain-specific acceptance thresholds.
 
-Some historical Colab notebooks use older library versions and metadata. They remain available for provenance and learning context, while the tested package and benchmark are the recommended path for new work.
+Historical Colab notebooks remain available for provenance and learning context, while the tested package and benchmark are the recommended path for new work.
 
-## Contributing and support
+## Contributing, citation and license
 
-Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a change. Contributions should focus on one clear forecasting problem and include tests, an open dataset or deterministic fixture, baseline comparison and documented limitations.
-
-Use the structured GitHub issue forms for reproducible bugs and model proposals. The [`SUPPORT.md`](SUPPORT.md) guide explains scope and the information needed for useful assistance.
-
-Community participation is governed by [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Security-sensitive concerns must follow [`SECURITY.md`](SECURITY.md).
-
-## Citation
+Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a change. Use [`SUPPORT.md`](SUPPORT.md) for help and [`SECURITY.md`](SECURITY.md) for security-sensitive concerns.
 
 GitHub can generate citation formats from [`CITATION.cff`](CITATION.cff). Cite the repository when its implementation, benchmark or teaching structure supports published work.
-
-## License
 
 Released under the [MIT License](LICENSE).
