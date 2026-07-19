@@ -5,15 +5,63 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "time-series-reference"
 version = "0.2.0"
-description = "Practical reference implementations for classical and modern time-series forecasting workflows"
+description = "Reproducible Python reference for time-series forecasting, backtesting, baselines, statistical models and machine-learning workflows"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [{name = "Saurav Singla"}]
+keywords = [
+  "time-series",
+  "time-series-forecasting",
+  "forecasting",
+  "python",
+  "backtesting",
+  "rolling-origin-evaluation",
+  "walk-forward-validation",
+  "autoregression",
+  "exponential-smoothing",
+  "holt-winters",
+  "arima",
+  "sarima",
+  "machine-learning",
+  "deep-learning",
+  "lstm",
+  "gru",
+  "n-beats",
+  "patchtst",
+  "probabilistic-forecasting",
+  "demand-forecasting",
+  "anomaly-detection",
+  "statsmodels",
+  "scikit-learn"
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
 dependencies = [
   "numpy>=1.26",
   "pandas>=2.1",
 ]
+
+[project.urls]
+Homepage = "https://github.com/sauravsingla/Time_Series"
+Documentation = "https://github.com/sauravsingla/Time_Series/tree/master/docs"
+Repository = "https://github.com/sauravsingla/Time_Series"
+Issues = "https://github.com/sauravsingla/Time_Series/issues"
+Changelog = "https://github.com/sauravsingla/Time_Series/blob/master/CHANGELOG.md"
+Leaderboard = "https://github.com/sauravsingla/Time_Series/blob/master/docs/BENCHMARK_LEADERBOARD.md"
 
 [project.optional-dependencies]
 classical = ["statsmodels>=0.14", "scikit-learn>=1.4"]
