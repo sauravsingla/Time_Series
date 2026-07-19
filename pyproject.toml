@@ -66,7 +66,14 @@ Leaderboard = "https://github.com/sauravsingla/Time_Series/blob/master/docs/BENC
 [project.optional-dependencies]
 classical = ["statsmodels>=0.14", "scikit-learn>=1.4"]
 modern = ["torch>=2.2"]
-dev = ["pytest>=8.0", "ruff>=0.5", "mypy>=1.10"]
+dev = [
+  "build>=1.2",
+  "mypy>=1.10",
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.5",
+  "twine>=5.1",
+]
 all = [
   "statsmodels>=0.14",
   "scikit-learn>=1.4",
@@ -80,8 +87,17 @@ time-series-benchmark = "timeseries_reference.benchmark:main"
 where = ["src"]
 
 [tool.pytest.ini_options]
-addopts = "-q"
+addopts = "-q --strict-markers --strict-config"
 testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["timeseries_reference"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 85
 
 [tool.ruff]
 line-length = 100
