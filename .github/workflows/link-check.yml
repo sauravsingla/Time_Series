@@ -1,0 +1,39 @@
+name: Link Check
+
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "CITATION.cff"
+      - ".github/workflows/link-check.yml"
+  push:
+    branches: [master]
+    paths:
+      - "**/*.md"
+      - "CITATION.cff"
+  schedule:
+    - cron: "17 4 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: links-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  markdown-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Markdown links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --accept 200,206,429
+            --exclude-mail
+            "**/*.md"
+          fail: true
