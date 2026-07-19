@@ -1,6 +1,7 @@
 # Python Time-Series Forecasting: Backtesting, Baselines and Model Comparison
 
 [![CI](https://github.com/sauravsingla/Time_Series/actions/workflows/ci.yml/badge.svg)](https://github.com/sauravsingla/Time_Series/actions/workflows/ci.yml)
+[![Link check](https://github.com/sauravsingla/Time_Series/actions/workflows/link-check.yml/badge.svg)](https://github.com/sauravsingla/Time_Series/actions/workflows/link-check.yml)
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Reproducible benchmark](https://img.shields.io/badge/benchmark-reproducible-brightgreen)](docs/BENCHMARK_LEADERBOARD.md)
@@ -15,10 +16,12 @@ The repository combines historical notebooks with a maintained Python package, o
 
 | Goal | Start here |
 |---|---|
+| Search forecasting models, metrics or validation methods | [Forecasting methods and evaluation index](docs/FORECASTING_METHODS_INDEX.md) |
 | Learn Python time-series forecasting | [Practical forecasting guide](docs/time-series-forecasting-guide.md) |
 | Choose a model for sales, demand or economic forecasting | [Model selection and use cases](docs/model-selection-and-use-cases.md) |
 | Compare forecasting models | [Benchmark leaderboard](docs/BENCHMARK_LEADERBOARD.md) |
 | Understand walk-forward validation and backtesting | [Benchmark methodology](docs/BENCHMARK_METHODOLOGY.md) |
+| Reproduce a result correctly | [Reproducibility standard](docs/REPRODUCIBILITY.md) |
 | Resolve common forecasting questions | [FAQ](docs/FAQ.md) |
 | Fix installation or runtime issues | [Troubleshooting](docs/TROUBLESHOOTING.md) |
 | Learn forecasting terminology | [Glossary](docs/GLOSSARY.md) |
@@ -168,16 +171,18 @@ This repository is relevant to:
 - Python time-series forecasting examples;
 - forecasting backtesting and walk-forward validation;
 - rolling-origin and expanding-window evaluation;
+- time-series cross-validation and leakage-safe validation;
 - autoregression and Holt-Winters exponential smoothing;
 - ARIMA and SARIMA model-selection concepts;
 - machine-learning forecasting with lag features;
+- recursive multi-step forecasting;
 - LSTM, GRU, N-BEATS, N-HiTS, TFT and PatchTST evaluation;
 - sales, demand, inventory and energy forecasting;
 - economic and financial time-series forecasting;
 - probabilistic forecasting and prediction intervals;
 - intermittent-demand forecasting;
 - forecast-based anomaly detection;
-- MAE, RMSE, MAPE, sMAPE and MASE.
+- forecast accuracy metrics including MAE, RMSE, MAPE, sMAPE and MASE.
 
 ## Roadmap
 
