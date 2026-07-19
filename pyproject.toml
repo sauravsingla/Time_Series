@@ -12,17 +12,25 @@ license = {text = "MIT"}
 authors = [{name = "Saurav Singla"}]
 keywords = [
   "time-series",
+  "time-series-analysis",
   "time-series-forecasting",
   "forecasting",
+  "forecast-accuracy",
+  "forecasting-metrics",
   "python",
   "backtesting",
+  "time-series-cross-validation",
   "rolling-origin-evaluation",
   "walk-forward-validation",
+  "expanding-window",
+  "rolling-window",
   "autoregression",
   "exponential-smoothing",
   "holt-winters",
   "arima",
   "sarima",
+  "recursive-forecasting",
+  "lag-features",
   "machine-learning",
   "deep-learning",
   "lstm",
@@ -30,7 +38,10 @@ keywords = [
   "n-beats",
   "patchtst",
   "probabilistic-forecasting",
+  "prediction-intervals",
   "demand-forecasting",
+  "sales-forecasting",
+  "economic-forecasting",
   "anomaly-detection",
   "statsmodels",
   "scikit-learn"
@@ -62,6 +73,7 @@ Repository = "https://github.com/sauravsingla/Time_Series"
 Issues = "https://github.com/sauravsingla/Time_Series/issues"
 Changelog = "https://github.com/sauravsingla/Time_Series/blob/master/CHANGELOG.md"
 Leaderboard = "https://github.com/sauravsingla/Time_Series/blob/master/docs/BENCHMARK_LEADERBOARD.md"
+MethodsIndex = "https://github.com/sauravsingla/Time_Series/blob/master/docs/FORECASTING_METHODS_INDEX.md"
 
 [project.optional-dependencies]
 classical = ["statsmodels>=0.14", "scikit-learn>=1.4"]
