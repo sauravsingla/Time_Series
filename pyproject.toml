@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "time-series-reference"
 version = "0.2.0"
-description = "Reproducible Python reference for time-series forecasting, backtesting, baselines, statistical models and machine-learning workflows"
+description = "Reproducible Python time-series forecasting benchmark with walk-forward backtesting, leakage-safe validation, statistical baselines and machine-learning model comparison"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -14,12 +14,18 @@ keywords = [
   "time-series",
   "time-series-analysis",
   "time-series-forecasting",
+  "python-time-series-forecasting",
   "forecasting",
+  "forecasting-benchmark",
+  "forecasting-model-comparison",
   "forecast-accuracy",
   "forecasting-metrics",
   "python",
   "backtesting",
+  "forecasting-backtesting",
   "time-series-cross-validation",
+  "leakage-safe-validation",
+  "chronological-validation",
   "rolling-origin-evaluation",
   "walk-forward-validation",
   "expanding-window",
@@ -41,8 +47,12 @@ keywords = [
   "prediction-intervals",
   "demand-forecasting",
   "sales-forecasting",
+  "inventory-forecasting",
+  "energy-load-forecasting",
   "economic-forecasting",
+  "financial-forecasting",
   "anomaly-detection",
+  "reproducible-research",
   "statsmodels",
   "scikit-learn"
 ]
