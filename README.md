@@ -1,4 +1,4 @@
-# Python Time-Series Forecasting: Backtesting, Baselines and Model Comparison
+# Python Time-Series Forecasting Benchmark with Walk-Forward Backtesting
 
 [![CI](https://github.com/sauravsingla/Time_Series/actions/workflows/ci.yml/badge.svg)](https://github.com/sauravsingla/Time_Series/actions/workflows/ci.yml)
 [![Link check](https://github.com/sauravsingla/Time_Series/actions/workflows/link-check.yml/badge.svg)](https://github.com/sauravsingla/Time_Series/actions/workflows/link-check.yml)
@@ -6,9 +6,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Reproducible benchmark](https://img.shields.io/badge/benchmark-reproducible-brightgreen)](docs/BENCHMARK_LEADERBOARD.md)
 
-A tested and reproducible Python reference for **time-series forecasting**, **forecasting backtesting**, **walk-forward validation**, **rolling-origin evaluation**, **statistical forecasting**, and **machine-learning forecasting**.
+A tested and reproducible reference for **Python time-series forecasting with walk-forward validation**, **forecasting backtesting**, **rolling-origin evaluation**, **statistical forecasting**, and **machine-learning model comparison**.
 
-The repository combines historical notebooks with a maintained Python package, open datasets, leakage-safe evaluation, automated tests and a cross-dataset model leaderboard. It is relevant to sales forecasting, demand forecasting, economic forecasting, energy-load forecasting, traffic forecasting, capacity planning and forecast-based anomaly detection.
+The repository combines a maintained Python package, open datasets, leakage-safe chronological validation, automated tests and a cross-dataset forecasting benchmark. It is relevant to sales forecasting, demand forecasting, economic forecasting, energy-load forecasting, traffic forecasting, capacity planning and forecast-based anomaly detection.
 
 > Start with strong baselines, validate chronologically, and adopt a more complex model only when the evidence supports it.
 
@@ -168,10 +168,11 @@ print(render_leaderboard(comparison))
 
 This repository is relevant to:
 
-- Python time-series forecasting examples;
-- forecasting backtesting and walk-forward validation;
-- rolling-origin and expanding-window evaluation;
-- time-series cross-validation and leakage-safe validation;
+- walk-forward validation for Python time-series forecasting;
+- Python time-series forecasting examples and benchmarks;
+- forecasting backtesting and rolling-origin evaluation;
+- expanding-window evaluation and time-series cross-validation;
+- leakage-safe and chronological forecasting validation;
 - autoregression and Holt-Winters exponential smoothing;
 - ARIMA and SARIMA model-selection concepts;
 - machine-learning forecasting with lag features;
