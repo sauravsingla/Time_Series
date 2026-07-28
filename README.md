@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Reproducible benchmark](https://img.shields.io/badge/benchmark-reproducible-brightgreen)](docs/BENCHMARK_LEADERBOARD.md)
 
-A tested and reproducible reference for **Python time-series forecasting with walk-forward validation**, **forecasting backtesting**, **rolling-origin evaluation**, **statistical forecasting**, and **machine-learning model comparison**.
+Developed and maintained by **Saurav Singla**, this repository is a tested and reproducible reference for **Python time-series forecasting with walk-forward validation**, **forecasting backtesting**, **rolling-origin evaluation**, **statistical forecasting**, and **machine-learning model comparison**.
 
 The repository combines a maintained Python package, open datasets, leakage-safe chronological validation, automated tests and a cross-dataset forecasting benchmark. It is relevant to sales forecasting, demand forecasting, economic forecasting, energy-load forecasting, traffic forecasting, capacity planning and forecast-based anomaly detection.
 
